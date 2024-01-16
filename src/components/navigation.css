@@ -1,0 +1,25 @@
+.nav-main{
+    /* display:flex; */
+    background-color: #FFFFFF;
+    padding: 4px 8px 4px 8px;
+    /* justify-content: space-between;
+    align-items: center; */
+    width:100%;
+    opacity: 0.7;
+}
+.right-nav{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+  
+}
+.button-connect{
+    background-color:#4E9282;
+    color:black;
+    font-weight:700;
+    font-family:'Kalnia', serif;
+    font-size:16px;
+    border-radius: 20px;
+    border:none;
+    padding: 6%;
+}

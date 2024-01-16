@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import '../components/navigation.css';
+import ghoLogo from '../Assets/gho_logo.png';
+import user from '../Assets/logo2.png';
+import { Grid } from "@mui/material";
 
 function Navigation() {
     const [account,setAccount]=useState();
@@ -45,10 +48,28 @@ const connectWallet=async()=>{
     }
    },[])
   return (
-    <div className='connect-button'>
+    <div className="nav-main">
+      <Grid container>
+        <Grid item xs={2}>
+      <div className="text-cont">
+        <img width="80px" height="60px" src={ghoLogo} alt="ghologo" />
+      </div>
+      </Grid>
+      <Grid item xs={7}>
+      
+      </Grid>
+      <Grid container item xs={3}  alignContent={"center"} justifyContent={"center"} alignItems={"center"} spacing={2}>
+     <Grid item xs={6}>
     {!isConnected?
-  <button style={{backgroundColor:"#E69D72",color:"black" ,fontWeight:700,fontFamily:"'Kalnia', serif",fontSize:"16px","&:hover": { color: 'black',backgroundColor:"#E69D72"},}} onClick={connectWallet}>CONNECT WALLET</button>
-  : <button style={{backgroundColor:"#E69D72",color:"black",fontWeight:700,fontFamily:"'Kalnia', serif",fontSize:"16px","&:hover": { color: 'black',backgroundColor:"#E69D72"},}} >CREATE</button>}
+  <button className="button-connect" style={{"&:hover": { color: 'black',backgroundColor:"#4E9282"},}} onClick={connectWallet}>CONNECT WALLET</button>
+  : <button className="button-connect" style={{"&:hover": { color: 'black',backgroundColor:"#4E9282"},}} >CREATE</button>}
+  </Grid>
+  <Grid item xs={6}>
+  <img width="60px" height="60px" src={user} alt="user" />
+  </Grid>
+ 
+  </Grid>
+  </Grid>
   </div>
   )
 }
