@@ -56,7 +56,7 @@ const connectWallet=async()=>{
       </Grid>
         <Grid item xs={1}  alignContent={"center"} justifyContent={"center"} alignItems={"center"}>
       <div className="text-cont">
-        <img width="90px" height="45px" src={ghoLogo} alt="ghologo" />
+        <img width="140px" height="65px" src={ghoLogo} alt="ghologo" />
       </div>
       </Grid>
       <Grid item xs={6}>
@@ -72,7 +72,7 @@ const connectWallet=async()=>{
   <Grid item xs={4}>
   {/* <img width="40px" height="40px" src={notifyIcon} alt="notify" style={{opacity:"1"}} /> */}
   <div className="token-container">
-  <h4 style={{margin:0,padding:"2px"}}>Tokens:12</h4>
+  <h4 style={{margin:0,padding:"2px"}}>Tokens : 12</h4>
   </div>
   </Grid></>}
   </Grid>
