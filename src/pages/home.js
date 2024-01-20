@@ -1,68 +1,93 @@
-import { Grid } from "@mui/material";
+import { Box, Button, Grid, Modal, Typography } from "@mui/material";
 import Navigation from "../components/navigation";
 import '../App.css';
 import Footer from "../components/footer";
-import gemini from '../Assets/Gemini.png';
+import gemini from '../Assets/coinsOverla.png';
+import createBtn from '../Assets/button.png';
 import { useEffect, useState } from "react";
-import {Elements} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
-import StripeCard from "../components/stripeCard";
 import axios from "axios";
 
-const stripePromise = loadStripe('pk_test_51JmASESJeDTHZ17rRTItK4Y1dsv9riiknmvKc3vhCUhbsEL2NT0XR0RGWa95oB4xkTOKlWYLDvbMkXXw2eKFtoiD00pFoLqPLh');
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: '#003D2D',
+    border: '2px solid white',
+    borderRadius:"20px",
+    p: 4,
+    color:"black",
+    maxHeight:"500px",
+    overflowY:"auto",
+    scrollbarWidth: "thin",
+    fontFamily:"'Kalnia', serif",
+  };
 
 function Home(){
     const [isStripe,setIsStripe]=useState(false);
-    const [options,setOptions]=useState({clientSecret:""})
-    // const options = {
-    //     // passing the client secret obtained from the Stripe Dashboard
-    //     clientSecret: 'pi_3OaEAdSJeDTHZ17r0CKO2Su2_secret_SJH8FwfjhAjZtTBdu9D0xX1nC'
-    //   };
-      useEffect(()=>{
-        axios.get("http://localhost:3001/stripeValue").then((res)=>{
-            setOptions({clientSecret:res?.data?.client_secret})
-console.log(res,"res",res?.data?.client_secret)
-        })
-      },[])
+    const [open,setOpen]=useState(false);
+    const handleClose=()=>{
+        setOpen(false);
+    }
+//       useEffect(()=>{
+//         axios.get("http://localhost:3001/stripeValue").then((res)=>{
+//             setOptions({clientSecret:res?.data?.client_secret})
+// console.log(res,"res",res?.data?.client_secret)
+//         })
+//       },[])
 const getStripes=async ()=>{
-    setIsStripe(true);
+    setOpen(true);
+}
+const handlePay=()=>{
+    axios.post("http://localhost:3001/create-checkout-session").then((res)=>{
+        console.log(res,"res")
+         window.location.href=res.data;
+      })
 }
     return(
         <>
          <div className="main-div">
-          
-           <Grid item xs={12}>
-               <div className="nav-main">
+   
+     
+           <Grid item xs={12} sx={{paddingLeft:"2px",paddingRight:"2px"}}>
+               <div >
            <Navigation />
            </div>
            </Grid>
-           <Grid container item xs={12} justifyContent={"center"} alignItems={"center"}>
-           <Grid item xs={6}>
+         
+             
+           <Grid container item xs={12} justifyContent={"center"} alignItems={"center"} spacing={4}>
+         <Grid item xs={1}></Grid>
+           <Grid item xs={5} justifyContent={"center"}>
             <div className="side-cryptos">
             <img className="side-crypto" src={gemini} alt="crypto" />
             </div>
            </Grid>
-           {!isStripe ?
-           <Grid container item xs={6} spacing={2}>
+       
+           <Grid container item xs={6} spacing={2} justifyContent={"center"} alignItems={"center"}>
           
-           <>
-            <Grid item xs={2}></Grid>
-            <Grid item xs={8}>
+          <div className="form-contain">
+            
+          <Grid item xs={12}></Grid>
+            <Grid item xs={12} sx={{width:"100%"}}>
             <div className="right-sub">
             <div>
-                STAKE AND GAIN
+              <h3 style={{margin:0}}>Stake and Gain</h3> 
             </div>
+            {/* <div style={{display:"flex",gap:"6px"}}>
+            <h3 style={{margin:0}}>Fabulous</h3><h2 style={{margin:0}}> GHO</h2>
+            </div> */}
             <div>
-                FABULOUS GHO
-            </div>
-            <div>
-               TOKENS
+            <h2 style={{margin:0}}>GHO TOKENS </h2>
             </div>
             </div>
             </Grid>
-            <Grid item xs={2}></Grid>
-            <Grid item xs={2}></Grid>
-            <Grid item xs={8}>
+            <Grid item xs={12}></Grid>
+            <Grid item xs={12}></Grid>
+            <Grid item xs={12}></Grid>
+            <Grid item xs={12}></Grid>
+            <Grid item xs={6} sx={{width:"100%",height:"100%"}}>
             <div className="form-container">
            
             <input type="text" name="collateral" placeholder="Collateral"/>
@@ -72,30 +97,21 @@ const getStripes=async ()=>{
             <div className="units"><span >GHO</span></div>
             
             </div> 
-                    <button className="button-create" onClick={getStripes}>Create Order</button>
+            <div className="btn-container">
+            <button onClick={getStripes} className="button-create"><img width={'150px'} src={createBtn} alt="btn"/></button>
+            </div>
+                   
              
             </div>
           
              
             </Grid>
+            <Grid item xs={3}></Grid>
             <Grid item xs={2}></Grid>
-            </>
+            </div>
           
            </Grid>
-           :  <> <Grid container item xs={6} spacing={2} sx={{height:"100vh"}}>
-        
-                 {/* <Grid item xs={2}></Grid> */}
-                 <Grid item xs={8} >
-                   
-            <Elements stripe={stripePromise} options={options}>
-           <StripeCard />
-         </Elements>
-       
-         </Grid>
-         <Grid item xs={2}></Grid>
-         </Grid>
-         </>
-          }
+          
            </Grid>
            
            <Grid item xs={12}>
@@ -104,6 +120,37 @@ const getStripes=async ()=>{
            
          
            </Grid>
+           <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+        
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          <div className="form-main">
+<div className="verify-container">
+  <div className="verify-content">
+  {/* {!isVerifyLoading?
+    <>
+  {isSign?
+  <h2 style={{textAlign:"center",fontFamily:"'Kalnia', serif",fontWeight:700}}>Sign your message!</h2>:
+  <h2 style={{textAlign:"center",fontFamily:"'Kalnia', serif",fontWeight:700}}> OK, lets get the proof!</h2>}</>
+  :<h2 style={{textAlign:"center",fontFamily:"'Kalnia', serif",fontWeight:700}}> Time for the reveal!</h2>} */}
+   
+  </div>
+  <div className="button-verify">
+    {/* {!isVerifyLoading? */}
+   
+  <Button size="small" sx={{display:"flex",justifyContent:"center",alignItems:"center"}} onClick={()=>{handlePay()}}><img width={"150px"} height={"50px"} src={createBtn} alt="paybtn" /></Button>
+  
+ </div>
+</div>
+</div>
+          </Typography>
+        </Box>
+      </Modal>
          </div>
         </>
     )

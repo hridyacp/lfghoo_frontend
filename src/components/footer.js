@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import '../components/navigation.css';
-import ghoLogo from '../Assets/gho_logo.png';
-import user from '../Assets/logo2.png';
+import teamPic from '../Assets/teamPic.png';
 import { Grid } from "@mui/material";
 
 function Footer() {
  
   return (
-    <div className="nav-main">
+    <div className="footer-main">
       <Grid container>
         <Grid item xs={2}>
    
@@ -16,15 +15,10 @@ function Footer() {
       
       </Grid>
       <Grid container item xs={3}  alignContent={"center"} justifyContent={"center"} alignItems={"center"} spacing={2}>
-     <Grid item xs={4}>
-     <img width="60px" height="60px" src={user} alt="user" />
+     <Grid item xs={12}>
+     <img width="275px" height="55px" src={teamPic} alt="team" />
   </Grid>
-  <Grid item xs={4}>
-  <img width="60px" height="60px" src={user} alt="user" />
-  </Grid>
-  <Grid item xs={4}>
-  <img width="60px" height="60px" src={user} alt="user" />
-  </Grid>
+  
  
   </Grid>
   </Grid>

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import '../components/navigation.css';
-import ghoLogo from '../Assets/gho_logo.png';
-import user from '../Assets/logo2.png';
+import ghoLogo from '../Assets/ghoLogo.png';
+import user from '../Assets/profile.png';
+import notifyIcon from '../Assets/notify.png';
 import { Grid } from "@mui/material";
 
 function Navigation() {
@@ -49,25 +50,34 @@ const connectWallet=async()=>{
    },[])
   return (
     <div className="nav-main">
-      <Grid container>
-        <Grid item xs={2}>
+      <Grid container  alignContent={"center"} justifyContent={"center"} alignItems={"center"}>
+      <Grid item xs={1} >
+     
+      </Grid>
+        <Grid item xs={1}  alignContent={"center"} justifyContent={"center"} alignItems={"center"}>
       <div className="text-cont">
-        <img width="80px" height="60px" src={ghoLogo} alt="ghologo" />
+        <img width="90px" height="45px" src={ghoLogo} alt="ghologo" />
       </div>
       </Grid>
-      <Grid item xs={7}>
+      <Grid item xs={6}>
       
       </Grid>
-      <Grid container item xs={3}  alignContent={"center"} justifyContent={"center"} alignItems={"center"} spacing={2}>
-     <Grid item xs={6}>
+      <Grid container item xs={4}  alignContent={"center"} justifyContent={"center"} alignItems={"center"}>
+     <Grid container item xs={12} alignContent={"center"} justifyContent={"center"} alignItems={"center"}>
     {!isConnected?
   <button className="button-connect" style={{"&:hover": { color: 'black',backgroundColor:"#4E9282"},}} onClick={connectWallet}>CONNECT WALLET</button>
-  : <button className="button-connect" style={{"&:hover": { color: 'black',backgroundColor:"#4E9282"},}} >CREATE</button>}
+  : <><Grid item xs={2} alignContent={"center"} justifyContent={"center"} alignItems={"center"}>
+  <img width="55px" height="55px" src={user} alt="user" style={{opacity:"1"}} />
   </Grid>
-  <Grid item xs={6}>
-  <img width="60px" height="60px" src={user} alt="user" />
+  <Grid item xs={4}>
+  {/* <img width="40px" height="40px" src={notifyIcon} alt="notify" style={{opacity:"1"}} /> */}
+  <div className="token-container">
+  <h4 style={{margin:0,padding:"2px"}}>Tokens:12</h4>
+  </div>
+  </Grid></>}
   </Grid>
- 
+  
+  <Grid item xs={3}></Grid>
   </Grid>
   </Grid>
   </div>
