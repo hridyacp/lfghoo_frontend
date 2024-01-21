@@ -58,12 +58,12 @@ const connectWallet=async()=>{
   return (
     <div className="nav-main">
       <Grid container  alignContent={"center"} justifyContent={"center"} alignItems={"center"}>
-      <Grid item xs={1} >
+      <Grid item xs={0.5} >
      
       </Grid>
-        <Grid item xs={1}  alignContent={"center"} justifyContent={"center"} alignItems={"center"}>
+        <Grid item xs={1.5}  alignContent={"center"} justifyContent={"center"} alignItems={"center"}>
       <div className="text-cont">
-        <img width="120px" height="120px" src={ghoLogo} alt="ghologo" />
+        <img width="210px" height="130px" src={ghoLogo} alt="ghologo" />
       </div>
       </Grid>
       <Grid item xs={6}>
