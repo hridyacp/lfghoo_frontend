@@ -1,10 +1,11 @@
-import { Box, Button, Grid, Modal, Typography } from "@mui/material";
+import { Box, Grid, Modal, Typography } from "@mui/material";
 import Navigation from "../components/navigation";
 import '../App.css';
 import Footer from "../components/footer";
 import gemini from '../Assets/backgroundAve.png';
 import createBtn from '../Assets/createbtn.png';
 import payBtn from '../Assets/payStripe.png';
+import success from '../Assets/success.gif';
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -27,34 +28,59 @@ const style = {
   };
 
 function Home(){
-    const [isStripe,setIsStripe]=useState(false);
     const [open,setOpen]=useState(false);
     const [collateral,setCollateral]=useState("");
     const [tokens,setTokens]=useState(0);
+    const [isSuccess,setIsSuccess]=useState(false);
+    const [isError,setIsError]=useState(false);
+    const [account,setAccount]=useState("");
+    const [isConnected,setIsConnected]=useState(false);
     const handleClose=()=>{
         setOpen(false);
     }
-//       useEffect(()=>{
-//         axios.get("http://localhost:3001/stripeValue").then((res)=>{
-//             setOptions({clientSecret:res?.data?.client_secret})
-// console.log(res,"res",res?.data?.client_secret)
-//         })
-//       },[])
+    const handleSuccessClose=()=>{
+      setIsSuccess(false);
+  }
+  const handleErrorClose=()=>{
+    setIsError(false);
+}
+useEffect(()=>{
+  console.log(isConnected,"isConnected")
+},[isConnected])
+    useEffect(()=>{
+      if(window.location.href.includes('?')){
+     if(window.location.href.includes('?success')){
+  setIsSuccess(true);
+      }
+      else if(window.location.href.includes('?error')){
+        setIsError(true);
+      }
+    }
+    else{
+      setIsSuccess(false);
+      setIsError(false);
+    }
+     },[])
+ 
 const getStripes=async ()=>{
-    setOpen(true);
+  if(isConnected){
+     setOpen(true);
+  }
+  else{
+    setOpen(false);
+    alert("Please connect wallet")
+  }
 }
 const handlePay=()=>{
-    axios.post("http://localhost:3001/create-checkout-session").then((res)=>{
+    axios.post("http://localhost:3001/create-checkout-session",{address:account,usd:collateral,tokens:tokens}).then((res)=>{
         console.log(res,"res")
          window.location.href=res.data;
       })
 }
 const handleInput=(e,type)=>{
   if(type==="collateral"){
-    setCollateral(e.target.value)
-  }
-  else{
-    setTokens(e.target.value)
+    setCollateral(e.target.value);
+    setTokens(e.target.value);
   }
 }
     return(
@@ -64,7 +90,7 @@ const handleInput=(e,type)=>{
      
            <Grid item xs={12} sx={{paddingLeft:"2px",paddingRight:"2px"}}>
                <div >
-           <Navigation />
+           <Navigation setAccount={(account)=>setAccount(account)} setIsConnected={(isConnected)=>{setIsConnected(isConnected)}} isConnected={isConnected}/>
            </div>
            </Grid>
          
@@ -105,7 +131,7 @@ const handleInput=(e,type)=>{
             <input type="text" name="collateral" placeholder="Collateral" onChange={(e)=>handleInput(e,"collateral")}/>
           
             <div className="wrapper">
-            <input type="text" name="tokens" placeholder="No. of Tokens" onChange={(e)=>handleInput(e,"token")} />
+            <input type="text" name="tokens" value={collateral} placeholder="No. of Tokens" />
             <div className="units"><span >GHO</span></div>
             
             </div> 
@@ -153,6 +179,55 @@ const handleInput=(e,type)=>{
     
     {/* <button size="small" className="button-pay" onClick={()=>{handlePay()}}>Pay with Stripe</button> */}
   <button size="small" className="button-pay" onClick={()=>{handlePay()}}><img className="pay-img" width={"210px"} height={"60px"} src={payBtn} alt="paybtn" /></button>
+  
+ </div>
+</div>
+</div>
+          </Typography>
+        </Box>
+      </Modal>
+      <Modal
+        open={isSuccess}
+        onClose={handleSuccessClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+        
+          <Typography id="modal-modal-description">
+          <div className="form-main" style={{display:"flex",alignItems:"center",flexDirection:"column"}}>
+          <img width="120px" height="100px" src={success} alt="success" />
+<div className="verify-container">
+ Payment Completed Successfully!!
+  <div className="button-verify">
+    {/* {!isVerifyLoading? */}
+    
+    {/* <button size="small" className="button-pay" onClick={()=>{handlePay()}}>Pay with Stripe</button> */}
+
+  
+ </div>
+</div>
+</div>
+          </Typography>
+        </Box>
+      </Modal>
+      <Modal
+        open={isError}
+        onClose={handleErrorClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+        
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          <div className="form-main" style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
+<div className="verify-container">
+  Error in Payment!Please try again
+  <div className="button-verify">
+    {/* {!isVerifyLoading? */}
+    
+    {/* <button size="small" className="button-pay" onClick={()=>{handlePay()}}>Pay with Stripe</button> */}
+
   
  </div>
 </div>

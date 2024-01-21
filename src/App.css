@@ -131,6 +131,7 @@ input::placeholder {
 .verify-container{
   color:white;
   font-family:'Kalnia', serif;
+  font-size: large;
 }
 .pay-img{
   align-items: center;

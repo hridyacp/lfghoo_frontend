@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import '../components/navigation.css';
 import ghoLogo from '../Assets/ghoLogo.png';
 import user from '../Assets/profile.png';
-import notifyIcon from '../Assets/notify.png';
 import { Grid } from "@mui/material";
 
-function Navigation() {
-    const [account,setAccount]=useState();
-    const [isConnected,setIsConnected]=useState(false);
+function Navigation({setAccount,setIsConnected,isConnected}) {
+   
 const connectWallet=async()=>{      
     if (window.ethereum) {
         try{
@@ -48,6 +46,15 @@ const connectWallet=async()=>{
    });
     }
    },[])
+   useEffect(()=>{
+    if(localStorage.getItem("walletAddress")!==null && localStorage.getItem("walletAddress")!=='' && localStorage.getItem("walletAddress")!==undefined){
+      setIsConnected(true)
+    }
+       else{
+        setIsConnected(false)
+       }
+    },[])
+   
   return (
     <div className="nav-main">
       <Grid container  alignContent={"center"} justifyContent={"center"} alignItems={"center"}>
@@ -56,7 +63,7 @@ const connectWallet=async()=>{
       </Grid>
         <Grid item xs={1}  alignContent={"center"} justifyContent={"center"} alignItems={"center"}>
       <div className="text-cont">
-        <img width="140px" height="65px" src={ghoLogo} alt="ghologo" />
+        <img width="120px" height="120px" src={ghoLogo} alt="ghologo" />
       </div>
       </Grid>
       <Grid item xs={6}>
@@ -72,7 +79,7 @@ const connectWallet=async()=>{
   <Grid item xs={4}>
   {/* <img width="40px" height="40px" src={notifyIcon} alt="notify" style={{opacity:"1"}} /> */}
   <div className="token-container">
-  <h4 style={{margin:0,padding:"2px"}}>Tokens : 12</h4>
+  <h3 style={{margin:0,padding:"2px",fontWeight:"200"}}>Tokens : 12</h3>
   </div>
   </Grid></>}
   </Grid>
